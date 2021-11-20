@@ -2,7 +2,7 @@
 import RxCocoa
 
 
-extension  UITextField   {
+public extension  UITextField   {
     enum ValidationRule {
         case hasNumber(_ value:Bool)
         case hasUpperCase(_ value:Bool)
@@ -54,11 +54,11 @@ extension  UITextField   {
                 if errorFound {
                     errorLabel.isHidden = false
                     errorLabel.text = generalErrorString
-                    errorLabel.superview!.superview!.layoutIfNeeded()
+                    errorLabel.rootSuperView().layoutIfNeeded()
                 } else {
                     errorLabel.isHidden = true
                     errorLabel.text = ""
-                    errorLabel.superview!.superview!.layoutIfNeeded()
+                    errorLabel.rootSuperView().layoutIfNeeded()
                 }
             }
         }
@@ -106,4 +106,16 @@ extension  UITextField   {
         }
         
     }
+    
+
 }
+public   extension UIView {
+  func rootSuperView() -> UIView
+  {
+      var view = self
+      while let s = view.superview {
+          view = s
+      }
+      return view
+  }
+  }

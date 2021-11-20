@@ -1,0 +1,6 @@
+use_frameworks!
+target 'IgorTextField_Tests' do
+  pod 'IgorTextField', :path => '../'
+  pod 'RxCocoa'
+  
+end

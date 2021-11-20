@@ -1,8 +1,35 @@
 
 import RxCocoa
+import UIKit
 
 
 public extension  UITextField   {
+    struct ValidityStruct {
+        static var _isValid:Bool = false
+        static var validTextFields:[UITextField] = []
+    }
+    var isValid:Bool {
+        get {
+            return  ValidityStruct.validTextFields.contains(self)
+            //  return ValidityStruct._isValid
+        }
+        set(newValue) {
+            if (newValue) {
+                if  !ValidityStruct.validTextFields.contains(self) {
+                    ValidityStruct.validTextFields.append(self)
+                }
+            } else {
+                
+                guard let indeks = ValidityStruct.validTextFields.firstIndex(of: self) else {return }
+                ValidityStruct.validTextFields.remove(at: indeks)
+                
+                
+            }
+            
+        }
+        
+        
+    }
     enum ValidationRule {
         case hasNumber(_ value:Bool)
         case hasUpperCase(_ value:Bool)
@@ -11,9 +38,10 @@ public extension  UITextField   {
         case hasLowerCase(_ value:Bool)
         case hasSpace(_ value:Bool)
     }
+    
     func addValidation(validators:[ValidationRule], errorLabel:UILabel, generalErrorString:String? = nil) {
-       
-        self.rx.text.bind { text in
+        
+      _ =  self.rx.text.bind { text in
             guard let text = text else {
                 return
             }
@@ -51,7 +79,9 @@ public extension  UITextField   {
                     }
                     break;
                 }
+                self.isValid = !errorFound
                 if errorFound {
+                    
                     errorLabel.isHidden = false
                     errorLabel.text = generalErrorString
                     errorLabel.rootSuperView().layoutIfNeeded()
@@ -107,15 +137,15 @@ public extension  UITextField   {
         
     }
     
-
+    
 }
 public   extension UIView {
-  func rootSuperView() -> UIView
-  {
-      var view = self
-      while let s = view.superview {
-          view = s
-      }
-      return view
-  }
-  }
+    func rootSuperView() -> UIView
+    {
+        var view = self
+        while let s = view.superview {
+            view = s
+        }
+        return view
+    }
+}

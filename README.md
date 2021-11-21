@@ -8,10 +8,9 @@
 ## Example
 add UITextfield's to your view, connect the outlets, add optional button that need to be enabled when all validation passes, and use something along the llines as written below. Enjoy!
 
- self.textField.addValidation(validators: [.hasUpperCase(true), .hasSpace(true)], errorLabel: errorLabel, generalErrorString: "Not valid string!",disableThisButton: submitButton)
- 
- self.textField2.addValidation(validators: [.hasUpperCase(true)], errorLabel: errorLabel2, generalErrorString: "Not valid string2!",disableThisButton: submitButton)
-    
+ userNameField.addValidation(validators: [.hasNumber(true),.hasUpperCase(true)], errorLabel: usernameError, generalErrorString: "Username is not Valid!", disableThisButton: loginLabel)
+        
+ passwordField.addValidation(validators: [.hasNumber(true),.custom { return $0.contains("igor")}], errorLabel: passwordError, generalErrorString: "Password is not Valid!", disableThisButton: loginLabel)
         
 ## Requirements
 

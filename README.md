@@ -17,7 +17,7 @@ IgorTextField is available through [CocoaPods](https://cocoapods.org). To instal
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'IgorTextField'
+pod 'IgorTextField', :git => 'https://github.com/cryptomacedonia/IgorTextField.git'
 ```
 
 ## Author

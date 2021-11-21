@@ -29,14 +29,13 @@ public extension  UITextField   {
             
         }
     }
-    
-    
     var removeAll:Bool {
         get {
             false
         }
         set(newValue) {
             ValidityStruct.validTextFields.removeAll()
+            ValidityStruct.notValidTextFields.removeAll()
         }
     }
     var isValid:Bool {

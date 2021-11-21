@@ -9,8 +9,8 @@
 Pod::Spec.new do |s|
   s.author= { 'Igor Jovcevski' => 'igor@edit8.com' }
   s.name             = 'IgorTextField'
-  s.version          = '0.1.3'
-  s.summary          = 'Easy validation for textfield in Swift!'
+  s.version          = '0.1.4'
+  s.summary          = 'Easy validation for textfield in Swift without subclassing!'
   s.dependency  'RxCocoa'
   s.swift_version = '5.0'
 # This description is used to generate tags and improve search results.

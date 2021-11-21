@@ -6,9 +6,13 @@
 [![Platform](https://img.shields.io/cocoapods/p/IgorTextField.svg?style=flat)](https://cocoapods.org/pods/IgorTextField)
 
 ## Example
+add UITextfield's to your view, connect the outlets, add optional button that need to be enabled when all validation passes, and use something along the llines as written below. Enjoy!
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
-
+ self.textField.addValidation(validators: [.hasUpperCase(true), .hasSpace(true)], errorLabel: errorLabel, generalErrorString: "Not valid string!",disableThisButton: submitButton)
+ 
+ self.textField2.addValidation(validators: [.hasUpperCase(true)], errorLabel: errorLabel2, generalErrorString: "Not valid string2!",disableThisButton: submitButton)
+    
+        
 ## Requirements
 
 ## Installation

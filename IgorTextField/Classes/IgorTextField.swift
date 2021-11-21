@@ -7,11 +7,39 @@ public extension  UITextField   {
     struct ValidityStruct {
         static var _isValid:Bool = false
         static var validTextFields:[UITextField] = []
+        static var notValidTextFields:[UITextField] = []
+    }
+    var ValidTextFields:[UITextField] {
+        get {
+            UITextField.ValidityStruct.validTextFields
+        }
+        set(newValue) {
+            UITextField.ValidityStruct.validTextFields = newValue
+            
+            
+        }
+    }
+    var NotValidTextFields:[UITextField] {
+        get {
+            UITextField.ValidityStruct.notValidTextFields
+        }
+        set(newValue) {
+            UITextField.ValidityStruct.notValidTextFields = newValue
+            
+            
+        }
+    }
+    var removeAll:Bool {
+        get {
+            false
+        }
+        set(newValue) {
+            ValidityStruct.validTextFields.removeAll()
+        }
     }
     var isValid:Bool {
         get {
             return  ValidityStruct.validTextFields.contains(self)
-            //  return ValidityStruct._isValid
         }
         set(newValue) {
             if (newValue) {
@@ -22,13 +50,8 @@ public extension  UITextField   {
                 
                 guard let indeks = ValidityStruct.validTextFields.firstIndex(of: self) else {return }
                 ValidityStruct.validTextFields.remove(at: indeks)
-                
-                
             }
-            
         }
-        
-        
     }
     enum ValidationRule {
         case hasNumber(_ value:Bool)
@@ -38,10 +61,13 @@ public extension  UITextField   {
         case hasLowerCase(_ value:Bool)
         case hasSpace(_ value:Bool)
     }
-    
-    func addValidation(validators:[ValidationRule], errorLabel:UILabel, generalErrorString:String? = nil) {
-        
-      _ =  self.rx.text.bind { text in
+    func addValidation(validators:[ValidationRule], errorLabel:UILabel? = nil, generalErrorString:String? = nil,disableThisButton:UIButton? = nil) {
+        let parentVC = self.parentViewController
+        _ =  parentVC?.rx.deallocating.bind(onNext: {
+            print(self.ValidTextFields)
+            self.removeAll = true
+        })
+        _ =  self.rx.text.bind { text in
             guard let text = text else {
                 return
             }
@@ -54,41 +80,54 @@ public extension  UITextField   {
                     }
                     break;
                 case .hasNumber(let shouldHaveNumber):
-                    if hasNumbers(text) != shouldHaveNumber {
+                    if self.hasNumbers(text) != shouldHaveNumber {
                         errorFound = true
                     }
                     break;
                 case .hasUpperCase(let shouldHaveUpperCase):
-                    if hasUpperCase(text) != shouldHaveUpperCase {
+                    if self.hasUpperCase(text) != shouldHaveUpperCase {
                         errorFound = true
                     }
                     break;
                 case .hasSpecialCharacter(let shouldHaveSpecialCharacter):
-                    if hasSpecialCharacter(text) != shouldHaveSpecialCharacter {
+                    if self.hasSpecialCharacter(text) != shouldHaveSpecialCharacter {
                         errorFound = true
                     }
                     break;
                 case .hasLowerCase(let shouldHaveLowerCase):
-                    if hasLowerCase(text) != shouldHaveLowerCase {
+                    if self.hasLowerCase(text) != shouldHaveLowerCase {
                         errorFound = true
                     }
                     break;
                 case .hasSpace(let shouldhaveSpace):
-                    if hasSpace(text) != shouldhaveSpace {
+                    if self.hasSpace(text) != shouldhaveSpace {
                         errorFound = true
                     }
                     break;
                 }
                 self.isValid = !errorFound
                 if errorFound {
-                    
-                    errorLabel.isHidden = false
-                    errorLabel.text = generalErrorString
-                    errorLabel.rootSuperView().layoutIfNeeded()
+                    var currentNotValid = self.NotValidTextFields
+                    if !self.NotValidTextFields.contains(self) {
+                        currentNotValid.append(self)
+                        self.NotValidTextFields = currentNotValid
+                    }
+                    disableThisButton?.isEnabled = false
+                    errorLabel?.isHidden = false
+                    errorLabel?.text = generalErrorString
+                    errorLabel?.rootSuperView().layoutIfNeeded()
                 } else {
-                    errorLabel.isHidden = true
-                    errorLabel.text = ""
-                    errorLabel.rootSuperView().layoutIfNeeded()
+                    self.NotValidTextFields = self.NotValidTextFields.filter {$0 != self}
+                    
+                        
+                    
+                    if (self.NotValidTextFields.count == 0) {
+                        disableThisButton?.isEnabled = true
+                    }
+                    errorLabel?.isHidden = true
+                    errorLabel?.text = ""
+                    errorLabel?.rootSuperView().layoutIfNeeded()
+                }
                 }
             }
         }
@@ -134,11 +173,8 @@ public extension  UITextField   {
             }
             return false
         }
-        
     }
-    
-    
-}
+
 public   extension UIView {
     func rootSuperView() -> UIView
     {
@@ -147,5 +183,18 @@ public   extension UIView {
             view = s
         }
         return view
+    }
+}
+public extension UIView {
+    var parentViewController: UIViewController? {
+        // Starts from next (As we know self is not a UIViewController).
+        var parentResponder: UIResponder? = self.next
+        while parentResponder != nil {
+            if let viewController = parentResponder as? UIViewController {
+                return viewController
+            }
+            parentResponder = parentResponder?.next
+        }
+        return nil
     }
 }

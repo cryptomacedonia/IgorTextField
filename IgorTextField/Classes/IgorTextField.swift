@@ -61,6 +61,7 @@ public extension  UITextField   {
         case hasSpecialCharacter(_ value:Bool)
         case hasLowerCase(_ value:Bool)
         case hasSpace(_ value:Bool)
+        case custom((_ text:String) -> Bool)
     }
     func addValidation(validators:[ValidationRule], errorLabel:UILabel? = nil, generalErrorString:String? = nil,disableThisButton:UIButton? = nil) {
         let parentVC = self.parentViewController
@@ -105,6 +106,11 @@ public extension  UITextField   {
                         errorFound = true
                     }
                     break;
+                case .custom(let closure):
+                    if !closure(text) {
+                    errorFound = true
+                    }
+                    break
                 }
                 self.isValid = !errorFound
                 if errorFound {

@@ -29,6 +29,8 @@ public extension  UITextField   {
             
         }
     }
+    
+    
     var removeAll:Bool {
         get {
             false

@@ -22,8 +22,8 @@ pod 'IgorTextField', :git => 'https://github.com/cryptomacedonia/IgorTextField.g
 
 ## Author
 
-cryptomacedonia, igor.jovcevski@sourcico.com
+cryptomacedonia, igor@edit8.com
 
 ## License
 
-IgorTextField is available under the MIT license. See the LICENSE file for more info.
+IgorTextField is available under the Macedonian license. You must post a tweet with content "Republic of Macedonia forever!"

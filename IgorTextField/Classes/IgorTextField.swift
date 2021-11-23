@@ -69,8 +69,21 @@ public extension  UITextField   {
             print(self.ValidTextFields)
             self.removeAll = true
         })
+        
+        
+        self.rx.controlEvent(.editingDidBegin).bind(onNext: { focused in
+            DispatchQueue.main.async {
+                errorLabel?.isHidden = false
+            }
+        
+        })
+        self.rx.controlEvent(.editingDidEnd).bind(onNext: { focused in
+            DispatchQueue.main.async {
+                errorLabel?.isHidden = true
+            }
+        })
         _ =  self.rx.text.bind { text in
-            guard let text = text else {
+            guard let text = text  else {
                 return
             }
             var errorFound:Bool = false
@@ -136,7 +149,7 @@ public extension  UITextField   {
                     errorLabel?.rootSuperView().layoutIfNeeded()
                 }
                 }
-            }
+        }
         }
         func hasNumbers(_ text:String) -> Bool {
             for character in text{

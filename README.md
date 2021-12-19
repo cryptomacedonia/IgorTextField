@@ -1,8 +1,8 @@
 
 # IgorTextField - validation without SubClassing
 
+![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/6MiIueAQdQ0/0.jpg)](https://www.youtube.com/watch?v=6MiIueAQdQ0)
 
-https://youtu.be/6MiIueAQdQ0
 
 
 [![CI Status](https://img.shields.io/travis/cryptomacedonia/IgorTextField.svg?style=flat)](https://travis-ci.org/cryptomacedonia/IgorTextField)

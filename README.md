@@ -29,4 +29,4 @@ cryptomacedonia, igor@edit8.com
 
 ## License
 
-IgorTextField is available under the Macedonian license. You must post a tweet with content "Republic of Macedonia forever!"
+IgorTextField is available under the Macedonian license. You must post a tweet with content "Republic of Macedonia forever!" AND remove  all references of "North" with "MACEDONIA" OR "REPUBLIC OF MACEDONIA" 

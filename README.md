@@ -1,4 +1,9 @@
+
 # IgorTextField - validation without SubClassing
+
+
+https://youtu.be/6MiIueAQdQ0
+
 
 [![CI Status](https://img.shields.io/travis/cryptomacedonia/IgorTextField.svg?style=flat)](https://travis-ci.org/cryptomacedonia/IgorTextField)
 [![Version](https://img.shields.io/cocoapods/v/IgorTextField.svg?style=flat)](https://cocoapods.org/pods/IgorTextField)
